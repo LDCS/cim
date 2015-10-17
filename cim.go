@@ -6,7 +6,7 @@ package cim
 import (
     "fmt"
     "net"
-    "qcfg"
+    "github.com/LDCS/qcfg"
     "errors"
     "bytes"
     "strings"
