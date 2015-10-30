@@ -54,7 +54,7 @@ type CimServer struct {
 }
 
 // The following cfg file contains the mapping from server names to ports
-var cfgFile = "/path/to/ports.cfg"
+var cfgFile = "/home/dennis/devel/goprojects/src/github.com/LDCS/cim/ports.cfg"
 
 const responseMaxLength = 1024*1024
 
@@ -98,7 +98,7 @@ func (cs *CimServer) Start() error {
 
 func handleConnection(conn net.Conn, currNode *CimNode, execChan chan ExecData, data interface{}) {
 
-    buf := make([]byte, 1024)
+    buf := make([]byte, 1024*1024)
     rootNode := currNode
     n, err := conn.Read(buf)
     //fmt.Println("Got login message :", buf[:n])
@@ -327,7 +327,8 @@ func extract_output(buf []byte, length int) string {
 }
 
 func (cc *CimConnection) Close() error {
-    return cc.tcpConn.Close()
+	cc.resp = nil
+	return cc.tcpConn.Close()
 }
 
 func (cc *CimConnection) RunCommand(cmd string) (string, error) {
